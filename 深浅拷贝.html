@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    // var obj1 = {
+    //     name: '李四'
+    // }
+    // var obj2 = obj1
+    // obj1.name = '张三'
+    // console.log(obj1,obj2);
+    // 实现 1.Object.assign()
+    var person = {
+        name: '张三',
+        age: '12',
+        relation: {
+            farther:'张以某'
+        }
+    }
+    var p1 = {}
+    Object.assign(p1,person)
+    console.log(p1);
+    person.name = '李四'
+    console.log(person.name,p1.name) //'李四' '张三'
+    person.relation.farther = '隔壁王叔'
+    console.log(p1.relation.farther)  //隔壁王叔'
+    // 循环赋值，Object.hasOwnProperty()
+    qDeep = (obj1,obj2)=>{
+        for(let props in obj1) {
+            if (obj1.hasOwnProperty(props)) {
+                obj2[props] = obj1[props]
+            }
+        }
+    }
+    let a1 = {
+        name: '小狗'
+    }
+    let a2 = {}
+    qDeep(a1,a2)
+    console.log(a2);
+    a1.name = '小猫咪'
+    console.log(a1,a2);
+    //深拷贝
+    sDeep = (target)=>{
+        // 1. 判断目标是对象还是数组
+        // Array.isArray()
+        let targetClone = Object.prototype.toString.call(target) === "[object Array]"? [] : {}
+        if (target&&typeof target ==="Object") {
+            for(props in target) {
+                if (target.hasOwnProperty(props)) {
+                    if(target[props]&&typeof target[props] ==="Object") {
+                        targetClone[props] = sDeep(target[props])
+                    }else{
+                        targetClone[props] = target[props]
+                    }
+                }
+            }
+        }
+        return targetClone
+    }
+</script>
+</body>
+</html>

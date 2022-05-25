@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="test"></div>
+<script src="https://cdn.staticfile.org/react/16.4.0/umd/react.development.js"></script>
+<script src="https://cdn.staticfile.org/react-dom/16.4.0/umd/react-dom.development.js"></script>
+<script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+
+<script type="text/babel">
+    class Sum extends React.Component{
+        state = {
+            count: 0
+        }
+        add = ()=>{
+            let count = this.state.count
+            count++
+            this.setState({
+                count: count
+            })
+        }
+        render() {
+            let { count } = this.state
+            return (
+                <div>
+                    <div>{count}</div>
+                    <button onClick={this.add}>点我+1</button>
+                </div>
+            )
+        }
+    }
+    ReactDOM.render(<Sum/>,document.getElementById('test'))
+</script>
+</body>
+</html>
