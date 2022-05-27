@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+  let p1 = new Promise((resolve, reject)=>{
+    setTimeout(()=>{
+      resolve(1)
+    },1000)
+  })
+  p1.then((res)=>{
+    console.log(res)
+  }).catch((err)=>{
+    console.log(err);
+  })
+
+  let p2 = new Promise((resolve, reject)=>{
+    setTimeout(()=>{
+      resolve(2)
+    },1000)
+  })
+  p2.then((res)=>{
+    console.log(res)
+  }).catch((err)=>{
+    console.log(err);
+  })
+
+
+  let p3 = new Promise((resolve, reject)=>{
+    setTimeout(()=>{
+      resolve(3)
+    },1000)
+  })
+  p3.then((res)=>{
+    console.log(res)
+  }).catch((err)=>{
+    console.log(err);
+  })
+  //
+  // let pAll = Promise.all([p2,p3,p1]).then((res)=>{
+  //   console.log(res)
+  // })
+
+  Promise._all = function (promiseArr) {
+    // 转成数组
+    let newPromiseArr = Array.from(promiseArr)
+    //数组长度
+    let len = newPromiseArr.length
+    let num = 0
+    let result = []
+    return new Promise((resolve,reject)=>{
+      newPromiseArr.forEach((value, index)=>{
+         Promise.resolve(value).then((res)=>{
+          result[index] = res
+          if(++num === len) resolve(result)
+        }).catch((err)=>{
+          reject(err)
+         })
+      })
+    })
+
+  }
+  Promise._all([p2,p3,p1]).then((res)=>{
+    console.log(res)
+  })
+
+
+</script>
+</body>
+</html>
